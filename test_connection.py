@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 import certifi
 
-uri = "mongodb+srv://lohithkumar1np_db_user:Lohith0987@cluster0.titokp2.mongodb.net/?retryWrites=true&w=majority"
+uri = "mongodb+srv://"
 
 try:
     client = MongoClient(
@@ -14,3 +14,4 @@ try:
     print("✅ Connected to MongoDB successfully!")
 except Exception as e:
     print(f"❌ Connection failed: {e}")
+
