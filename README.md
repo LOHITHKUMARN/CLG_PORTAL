@@ -1,4 +1,4 @@
-# 🎓 College Portal – Academic Management System
+# College Portal – Academic Management System
 
 A modern **Flask-based web application** built to simplify college administration, internal assessment tracking, attendance monitoring, and academic resource sharing.  
 The system provides **separate dashboards for Students and Teachers**, ensuring seamless interaction, efficient data management, and real-time access to academic information.
@@ -132,8 +132,7 @@ CollegePortal/
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/yourusername/college-portal.git
-cd college-portal
+git clone https://github.com/LOHITHKUMARN/CLG_PORTAL.git
 ```
 ## 2️⃣ Create a Virtual Environment
 
