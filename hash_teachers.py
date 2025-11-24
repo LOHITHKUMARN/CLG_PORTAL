@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import bcrypt
 
 # Connect to MongoDB
-client = MongoClient("mongodb+srv://lohithkumar1np_db_user:Lohith0987@cluster0.titokp2.mongodb.net/college_portal?retryWrites=true&w=majority")
+client = MongoClient("mongodb+srv://")
 db = client['college_portal']
 teachers = db['teachers']
 
@@ -25,3 +25,4 @@ for teacher in teachers.find():
     print(f"Updated password for {teacher['username']}")
 
 print("All teacher passwords are now hashed.")
+
