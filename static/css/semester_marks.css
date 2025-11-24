@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+body {
+  background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
+  font-family: 'Poppins', sans-serif;
+  color: #f5f5f5;
+  margin: 0;
+}
+
+/* Page Title */
+.page-title {
+  background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Back Button */
+.btn-back {
+  background: transparent;
+  color: #ff6f3c;
+  border: 2px solid #ff6f3c;
+  border-radius: 12px;
+  font-weight: 600;
+  padding: 8px 20px;
+  transition: 0.3s ease;
+}
+
+.btn-back:hover {
+  background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255, 111, 60, 0.25);
+}
+
+/* Student Grid */
+.student-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 1.8rem;
+}
+
+/* Student Card */
+.student-card {
+  background: #2a2a2a; /* ✅ Dark grey card */
+  border-radius: 18px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: 0.3s ease;
+  color: #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.student-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(255, 111, 60, 0.25);
+}
+
+/* Header */
+.card-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h5 {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Action Buttons */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.btn-reset,
+.btn-delete {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Reset Button */
+.btn-reset {
+  background: rgba(255, 111, 60, 0.1);
+  color: #ff6f3c;
+  box-shadow: 0 2px 8px rgba(255, 111, 60, 0.15);
+}
+
+.btn-reset:hover {
+  background: linear-gradient(135deg, #ff6f3c, #ff4b2b);
+  color: #fff;
+  transform: rotate(-10deg);
+}
+
+/* Delete Button */
+.btn-delete {
+  background: rgba(230, 57, 70, 0.1);
+  color: #ff4b4b;
+  box-shadow: 0 2px 8px rgba(230, 57, 70, 0.15);
+}
+
+.btn-delete:hover {
+  background: linear-gradient(135deg, #ff4b4b, #ff7c7c);
+  color: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 6px 14px rgba(255, 77, 77, 0.3);
+}
+
+/* Subject Section */
+.subjects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.subject-card {
+  flex: 1 1 180px;
+  background: #242424; /* ✅ darker subject card */
+  border-radius: 12px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+  color: #fff;
+}
+
+.subject-card:hover {
+  background: #2f2f2f;
+  transform: scale(1.02);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Inputs */
+.inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.inputs-grid input {
+  background: #1e1e1e;
+  border-radius: 8px;
+  border: 1.4px solid rgba(255, 255, 255, 0.15);
+  text-align: center;
+  padding: 6px 4px;
+  font-size: 0.85rem;
+  color: #fff;
+  transition: 0.2s ease;
+}
+
+.inputs-grid input:focus {
+  border-color: #ff6f3c;
+  box-shadow: 0 0 10px rgba(255, 111, 60, 0.4);
+  background: #262626;
+}
+
+/* Save All Button */
+.btn-save-all {
+  background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 40px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 8px 20px rgba(255, 111, 60, 0.25);
+  transition: 0.3s ease;
+}
+
+.btn-save-all:hover {
+  background: linear-gradient(135deg, #ff6f3c, #ff4b2b);
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(255, 111, 60, 0.35);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .student-grid {
+    grid-template-columns: 1fr;
+  }
+}

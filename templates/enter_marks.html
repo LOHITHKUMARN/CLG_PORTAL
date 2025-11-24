@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Enter Marks (CSV)</h3>
+<form method="post" enctype="multipart/form-data">
+  <input type="file" name="marks_file" accept=".csv" required>
+  <button class="btn btn-primary mt-2">Upload</button>
+</form>
+<p class="mt-2">CSV columns: usn, semester, subject, IA1, IA2, IA3, max_marks(optional)</p>
+{% endblock %}

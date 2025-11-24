@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/student_view_marks.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-3 px-md-4 py-4 view-marks-page">
+
+  <!-- ================== BREADCRUMB / TOP-NAV ================== -->
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb small">
+      <li class="breadcrumb-item"><a href="{{ url_for('student_dashboard') }}" class="link-muted">Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Semester {{ semester }} — View Marks</li>
+    </ol>
+  </nav>
+
+  <!-- ================== HERO / HEADER ================== -->
+  <section class="hero-card shadow-sm rounded-4 p-4 p-md-5 mb-4">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-8">
+        <h1 class="display-6 fw-bold text-gradient m-0">
+          <i class="bi bi-clipboard2-check-fill me-2"></i> IA Marks & Attendance
+        </h1>
+        <p class="text-muted mt-2 mb-0">
+          Detailed internal assessment report for <strong>Semester {{ semester }}</strong>.
+          Download a PDF marksheet or review per-subject performance below.
+        </p>
+      </div>
+      <div class="col-lg-4 text-lg-end">
+        <div class="btn-group gap-2 d-flex d-lg-inline-flex">
+          <a href="{{ url_for('student_dashboard') }}" class="btn btn-outline-orange">
+            <i class="bi bi-arrow-left-circle me-1"></i> Back
+          </a>
+          <a href="{{ url_for('download_marksheet', semester=semester) }}" class="btn btn-orange">
+            <i class="bi bi-file-earmark-arrow-down me-1"></i> Download Marksheet
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== STUDENT STATS STRIP ================== -->
+  <section class="student-strip rounded-4 p-3 p-md-4 mb-4">
+    <div class="row g-3 g-md-4 text-center text-md-start">
+      <div class="col-12 col-md-4">
+        <div class="info-block">
+          <div class="label"><i class="bi bi-person-badge me-2"></i>Name</div>
+          <div class="value">{{ name or '—' }}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="info-block">
+          <div class="label"><i class="bi bi-upc me-2"></i>USN</div>
+          <div class="value">{{ usn or '—' }}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="info-block">
+          <div class="label"><i class="bi bi-mortarboard-fill me-2"></i>Branch</div>
+          <div class="value">{{ branch or '—' }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="kpi-grid mb-4">
+  <div class="row g-3 g-md-4">
+    <!-- Avg IA -->
+    <div class="col-12 col-md-4">
+      <div class="kpi-card shadow-sm rounded-4 p-4 h-100">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <div class="kpi-label">Average IA Score</div>
+            <div class="kpi-value">{{ avg_ia }}</div>
+          </div>
+          <div class="kpi-icon gradient-circle">
+            <i class="bi bi-graph-up-arrow"></i>
+          </div>
+        </div>
+        <div class="tiny-hint mt-2 text-muted">
+          Based on IA1 + IA2 + IA3 across all subjects
+        </div>
+      </div>
+    </div>
+
+    <!-- Attendance -->
+    <div class="col-12 col-md-4">
+      <div class="kpi-card shadow-sm rounded-4 p-4 h-100">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="flex-grow-1 pe-3">
+            <div class="kpi-label">Attendance</div>
+            <div class="progress progress-compact mt-2" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ avg_attendance|int }}">
+              <div class="progress-bar bg-orange" style="width: {{ avg_attendance|int }}%"></div>
+            </div>
+            <div class="kpi-value mt-2">{{ avg_attendance|int }}%</div>
+          </div>
+          <div class="kpi-icon gradient-circle">
+            <i class="bi bi-activity"></i>
+          </div>
+        </div>
+        <div class="tiny-hint mt-2 text-muted">Across all subjects for this semester</div>
+      </div>
+    </div>
+
+    <!-- Top Performing Subject -->
+    <div class="col-12 col-md-4">
+      <div class="kpi-card shadow-sm rounded-4 p-4 h-100">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <div class="kpi-label">Top Performing Subject</div>
+            <div class="kpi-value">{{ top_subject or '—' }}</div>
+          </div>
+          <div class="kpi-icon gradient-circle">
+            <i class="bi bi-trophy-fill"></i>
+          </div>
+        </div>
+        <div class="tiny-hint mt-2 text-muted">Based on total IA points</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- ================== SUBJECT CARDS GRID ================== -->
+  <section class="mb-4">
+    <div class="d-flex align-items-center justify-content-between mb-2">
+      <h5 class="fw-bold m-0 text-gradient"><i class="bi bi-journal-check me-2"></i>Subject Breakdown</h5>
+      <div class="d-none d-md-flex align-items-center gap-2">
+        <span class="legend-dot dot-ia1"></span><small class="text-muted">IA1</small>
+        <span class="legend-dot dot-ia2"></span><small class="text-muted">IA2</small>
+        <span class="legend-dot dot-ia3"></span><small class="text-muted">IA3</small>
+        <span class="legend-dot dot-att"></span><small class="text-muted">Attendance</small>
+      </div>
+    </div>
+
+    <div class="row g-3 g-md-4 subjects-grid">
+      {% if marks %}
+        {% for subject, data in marks.items() %}
+        <div class="col-xl-3 col-lg-4 col-md-6">
+          <div class="subject-card h-100 rounded-4 shadow-sm">
+            <div class="subject-head">
+              <div class="badge-sem">SEM {{ semester }}</div>
+              <h6 class="mb-0 text-white"><i class="bi bi-book me-2"></i>{{ subject }}</h6>
+            </div>
+            <div class="subject-body p-3">
+              <div class="metric-row">
+                <span class="metric-label"><span class="legend-dot dot-ia1"></span> IA1</span>
+                <span class="metric-value">{{ data.IA1 or '—' }}</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label"><span class="legend-dot dot-ia2"></span> IA2</span>
+                <span class="metric-value">{{ data.IA2 or '—' }}</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-label"><span class="legend-dot dot-ia3"></span> IA3</span>
+                <span class="metric-value">{{ data.IA3 or '—' }}</span>
+              </div>
+              <div class="metric-row att">
+                <span class="metric-label"><span class="legend-dot dot-att"></span> Attendance</span>
+                <span class="metric-value">{{ data.attendance or '—' }}%</span>
+              </div>
+            </div>
+            <div class="subject-foot d-flex align-items-center justify-content-between px-3 pb-3">
+              {% set total_ia = (data.IA1|int) + (data.IA2|int) + (data.IA3|int) %}
+              <div class="mini-chip">
+                <i class="bi bi-star-fill me-1"></i> {{ total_ia }} pts
+              </div>
+              <a class="mini-link" data-bs-toggle="collapse" href="#c_{{ loop.index }}" role="button" aria-expanded="false" aria-controls="c_{{ loop.index }}">
+                details <i class="bi bi-chevron-down small ms-1"></i>
+              </a>
+            </div>
+            <div class="collapse" id="c_{{ loop.index }}">
+              <div class="subject-details p-3 pt-0">
+                <div class="detail-row">
+                  <span>Max per IA</span><strong>30</strong>
+                </div>
+                <div class="detail-row">
+                  <span>Total IA</span><strong>{{ total_ia }}/90</strong>
+                </div>
+                <div class="detail-row">
+                  <span>Status</span>
+                  {% if (data.attendance|int) >= 75 %}
+                    <strong class="text-success">Eligible</strong>
+                  {% else %}
+                    <strong class="text-danger">Shortage</strong>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-12 text-center text-muted py-5">
+          <i class="bi bi-info-circle me-2"></i>No marks available yet for Semester {{ semester }}.
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- ================== DETAILED TABLE ================== -->
+  <section class="rounded-4 shadow-sm table-wrap p-3 p-md-4 mb-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h6 class="fw-bold m-0 text-gradient"><i class="bi bi-table me-2"></i>Detailed Table</h6>
+      <div class="small text-muted">IA scores and attendance in tabular view</div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-borderless align-middle">
+        <thead class="table-head">
+          <tr>
+            <th scope="col">Subject</th>
+            <th scope="col">IA1</th>
+            <th scope="col">IA2</th>
+            <th scope="col">IA3</th>
+            <th scope="col">Attendance</th>
+            <th scope="col">Total / 90</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody class="table-body">
+          {% for subject, data in marks.items() %}
+          {% set total_ia = (data.IA1|int) + (data.IA2|int) + (data.IA3|int) %}
+          <tr>
+            <td class="fw-semibold">{{ subject }}</td>
+            <td>{{ data.IA1 or '—' }}</td>
+            <td>{{ data.IA2 or '—' }}</td>
+            <td>{{ data.IA3 or '—' }}</td>
+            <td>{{ data.attendance or '—' }}%</td>
+            <td>{{ total_ia }}</td>
+            <td>
+              {% if (data.attendance|int) >= 75 %}
+                <span class="badge bg-soft-success text-success">Eligible</span>
+              {% else %}
+                <span class="badge bg-soft-danger text-danger">Shortage</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================== ACTION FOOTER ================== -->
+  <section class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-center mt-4">
+    <div class="small text-muted">
+      Tip: Keep attendance above <strong>75%</strong> to remain eligible for exams.
+    </div>
+    <div class="d-flex gap-2">
+      <a href="{{ url_for('student_dashboard') }}" class="btn btn-outline-orange">
+        <i class="bi bi-house-door me-1"></i> Back to Dashboard
+      </a>
+      <a href="{{ url_for('download_marksheet', semester=semester) }}" class="btn btn-orange">
+        <i class="bi bi-file-earmark-arrow-down me-1"></i> Download Marksheet
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<!-- ================== OPTIONAL: HELP MODAL ================== -->
+<div class="modal fade" id="helpModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header border-0 bg-gradient text-white rounded-top-4">
+        <h6 class="modal-title"><i class="bi bi-question-circle-fill me-2"></i>How to read this page</h6>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <ol class="small mb-0">
+          <li><strong>KPI cards</strong> summarize average IA and attendance across all subjects.</li>
+          <li><strong>Subject cards</strong> show IA1/IA2/IA3 and attendance, with a details toggle.</li>
+          <li>Use the <strong>table</strong> for a compact summary and quick comparison.</li>
+          <li>Click <strong>Download Marksheet</strong> to get a PDF version.</li>
+        </ol>
+      </div>
+      <div class="modal-footer border-0">
+        <button class="btn btn-orange" data-bs-dismiss="modal">Got it</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

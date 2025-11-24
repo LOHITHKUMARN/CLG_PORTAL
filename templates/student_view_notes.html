@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/student_view_notes.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+  <!-- Header -->
+  <div class="notes-header mb-5 text-center">
+    <h2 class="fw-bold text-gradient">
+      <i class="bi bi-journal-bookmark-fill me-2"></i> Semester {{ semester }} Notes
+    </h2>
+    <p class="text-muted">Access uploaded notes for subjects you have marks in.</p>
+    <a href="{{ url_for('student_dashboard') }}" class="btn btn-back mt-3">
+      <i class="bi bi-arrow-left-circle me-2"></i> Back to Dashboard
+    </a>
+  </div>
+
+  <!-- Subject Cards -->
+  {% if notes %}
+  <div class="row g-4 justify-content-center">
+    {% for subject, modules in notes.items() %}
+    <div class="col-md-6 col-lg-4">
+      <div class="subject-card shadow-sm">
+        <div class="subject-header">
+          <i class="bi bi-book me-2 text-white"></i>{{ subject }}
+        </div>
+
+        <div class="module-list">
+          {% for m in modules %}
+          <div class="module-item {% if not m.uploaded %}not-uploaded{% endif %}">
+            <div class="module-info">
+              <i class="bi bi-file-earmark-text"></i> {{ m.module }}
+            </div>
+
+            {% if m.uploaded %}
+            <a href="{{ url_for('download_note', note_id=m.id) }}" class="btn btn-download">
+              <i class="bi bi-cloud-arrow-down"></i>
+            </a>
+            {% else %}
+            <span class="no-file"><i class="bi bi-x-circle"></i> Not uploaded</span>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="text-center py-5 text-muted">
+    <i class="bi bi-emoji-frown fs-2 d-block mb-3"></i>
+    <p>No notes available yet. Please check back later.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/upload_students.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="upload-container d-flex justify-content-center align-items-center">
+  <div class="upload-card text-center shadow-lg">
+    <div class="upload-icon mb-3">
+      <i class="bi bi-file-earmark-spreadsheet"></i>
+    </div>
+    <h2 class="fw-bold mb-2 text-gradient">Upload Students</h2>
+    <p class="text-muted mb-4">Branch: <strong>{{ branch_code }}</strong></p>
+    
+    <form method="post" enctype="multipart/form-data" id="uploadForm">
+      <div class="drop-zone mb-4" id="dropZone">
+        <p class="mb-2"><i class="bi bi-cloud-arrow-up fs-1 text-gradient"></i></p>
+        <p class="mb-1 fw-semibold">Drag & Drop your CSV / Excel file here</p>
+        <p class="text-muted small">or click to select a file</p>
+        <input type="file" name="students_file" id="fileInput" accept=".csv,.xlsx,.xls" required>
+      </div>
+      <button class="btn btn-upload px-5 py-2" type="submit">Upload Students</button>
+    </form>
+
+    <p class="mt-4 small text-white">
+      <i class="bi bi-info-circle me-1"></i>
+      File format: <code>name, usn, year, semester</code>
+    </p>
+    <a href="{{ url_for('branch_dashboard', code=branch_code) }}" class="btn btn-back mt-3">
+      <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+  </div>
+</div>
+
+<script>
+  // --- Drag & Drop interaction ---
+  const dropZone = document.getElementById("dropZone");
+  const fileInput = document.getElementById("fileInput");
+
+  dropZone.addEventListener("click", () => fileInput.click());
+
+  fileInput.addEventListener("change", () => {
+    dropZone.classList.add("uploaded");
+    dropZone.querySelector("p.fw-semibold").textContent = "File Selected ✔";
+  });
+
+  dropZone.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZone.classList.add("dragover");
+  });
+
+  dropZone.addEventListener("dragleave", () => {
+    dropZone.classList.remove("dragover");
+  });
+
+  dropZone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropZone.classList.remove("dragover");
+    fileInput.files = e.dataTransfer.files;
+    dropZone.classList.add("uploaded");
+    dropZone.querySelector("p.fw-semibold").textContent = "File Selected ✔";
+  });
+</script>
+{% endblock %}

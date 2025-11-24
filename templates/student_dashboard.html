@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/student_dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="student-dashboard container py-5">
+  <div class="dashboard-header text-center mb-5">
+    <h2 class="fw-bold text-gradient">
+      <i class="bi bi-person-circle me-2"></i> Welcome, {{ name }}
+    </h2>
+    <p class="text-muted">USN: {{ usn }} | Branch: {{ branch }} | Semester: {{ semester }}</p>
+  </div>
+
+  <div class="row g-4 justify-content-center align-items-stretch">
+    
+    <!-- View Marks -->
+    <div class="col-md-4 col-sm-6 d-flex">
+      <div class="dash-card shadow-sm w-100">
+        <div>
+          <div class="icon-wrapper">
+            <i class="bi bi-bar-chart-line-fill"></i>
+          </div>
+          <h4 class="fw-bold mb-3">View Marks</h4>
+          <p class="text-muted mb-4">Check IA marks and attendance details.</p>
+        </div>
+        <a href="{{ url_for('student_auto_view_marks') }}" class="btn-view-marks mt-auto">
+          <i class="bi bi-graph-up-arrow"></i> View Marks
+        </a>
+      </div>
+    </div>
+
+    <!-- View Notes -->
+    <div class="col-md-4 col-sm-6 d-flex">
+      <div class="dash-card shadow-sm w-100">
+        <div>
+          <div class="icon-wrapper">
+            <i class="bi bi-journal-text"></i>
+          </div>
+          <h4 class="fw-bold mb-3">View Notes</h4>
+          <p class="text-muted mb-4">Access all your semester notes and modules.</p>
+        </div>
+        <a href="{{ url_for('student_view_notes') }}" class="btn-action mt-auto">
+          <i class="bi bi-journal-arrow-down"></i> View Notes
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

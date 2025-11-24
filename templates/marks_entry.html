@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Enter Marks - {{ student.name }} ({{ usn if false else student.usn }}) - Sem {{ semester }}</h3>
+
+<form method="post" action="{{ url_for('save_marks', usn=student.usn, semester=semester) }}">
+  <table class="table">
+    <thead><tr><th>Subject</th><th>IA1</th><th>IA2</th><th>IA3</th><th>Attendance</th></tr></thead>
+    <tbody>
+      {% for s in subjects %}
+        {% set m = existing.marks.get(s) if existing.marks else None %}
+        <tr>
+          <td>{{ s }}</td>
+          <td><input name="{{ s }}_IA1" class="form-control" value="{{ m.IA1 if m and m.IA1 is defined else '' }}"></td>
+          <td><input name="{{ s }}_IA2" class="form-control" value="{{ m.IA2 if m and m.IA2 is defined else '' }}"></td>
+          <td><input name="{{ s }}_IA3" class="form-control" value="{{ m.IA3 if m and m.IA3 is defined else '' }}"></td>
+          <td><input name="{{ s }}_attendance" class="form-control" value="{{ m.attendance if m and m.attendance is defined else '' }}"></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <button class="btn btn-primary">Save Marks</button>
+</form>
+
+<form method="post" action="{{ url_for('reset_marks', usn=student.usn, semester=semester) }}" onsubmit="return confirm('Reset marks?')">
+  <button class="btn btn-danger mt-2">Reset Marks</button>
+</form>
+
+<a class="btn btn-secondary mt-2" href="{{ url_for('teacher_dashboard') }}">Back</a>
+{% endblock %}

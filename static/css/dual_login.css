@@ -1,0 +1,199 @@
+/* === General Page === */
+body {
+    background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    height: 100vh;
+    color: #f4f4f4;
+}
+
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* === Login Box === */
+.login-box {
+    width: 850px;
+    height: 500px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #1b1b1b;
+    /* ✅ dark background for entire box */
+    position: relative;
+    transition: 0.6s ease-in-out;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* === Panels === */
+.form-side {
+    width: 50%;
+    height: 100%;
+    background: #3c3c3c;
+    /* ✅ deep black form panel */
+    color: #fff;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    transform: translateX(-100%);
+    z-index: 1;
+    padding: 2.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-panel.active {
+    opacity: 1;
+    transform: translateX(0);
+    z-index: 5;
+}
+
+/* === Headings === */
+.form-side h2 {
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+/* === Inputs === */
+.form-control {
+    background: #1e1e1e;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    transition: 0.3s ease;
+    padding: 12px 15px;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.form-control:focus {
+    border-color: #ff6f3c;
+    box-shadow: 0 0 10px rgba(255, 111, 60, 0.4);
+    background: #262626;
+    color: #fff;
+}
+
+/* === Login Button === */
+.btn-danger {
+    background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+    border: none;
+    border-radius: 30px;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 6px 20px rgba(255, 111, 60, 0.25);
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #ff6f3c, #ff4b2b);
+    transform: scale(1.03);
+    box-shadow: 0 10px 30px rgba(255, 111, 60, 0.4);
+}
+
+/* === Right Info Panel === */
+.info-side {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    transition: all 0.4s ease;
+}
+
+.info-side h2 {
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+}
+
+.info-side p {
+    font-size: 15px;
+    color: #fff;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+.info-side button {
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: 0.3s;
+    padding: 8px 20px;
+}
+
+.info-side button:hover {
+    background: white;
+    color: #ff4b2b;
+}
+
+/* === Password Text (white dots) === */
+input[type="password"],
+input[type="text"] {
+    color: #fff;
+    caret-color: #ff6f3c;
+}
+
+/* === Back to Dashboard Button === */
+.btn-outline-danger {
+    border-color: #ff6f3c;
+    color: #ff6f3c;
+    border-radius: 25px;
+    transition: 0.3s;
+}
+
+.btn-outline-danger:hover {
+    background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+    color: white;
+    box-shadow: 0 6px 15px rgba(255, 111, 60, 0.4);
+}
+
+/* === Divider Glow (optional) === */
+.login-box::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background: linear-gradient(to bottom, #ff4b2b, #ff6f3c);
+    opacity: 0.6;
+}
+
+/* === Responsive Fix === */
+@media (max-width: 992px) {
+    .login-box {
+        flex-direction: column;
+        width: 90%;
+        height: auto;
+    }
+
+    .form-side,
+    .info-side {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+}

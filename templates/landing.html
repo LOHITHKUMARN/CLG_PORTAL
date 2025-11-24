@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="landing-container">
+
+  <!-- 🏫 Hero Section -->
+  <section class="hero animate-fade">
+    <div class="hero-text animate-slide-left">
+      <h1>Streamlining <span>College Management</span></h1>
+      <p>Centralized marks, attendance, notes, and updates — built for smarter academic administration.</p>
+      <div class="hero-buttons">
+        <a href="{{ url_for('login') }}" class="btn-primary"><i class="bi bi-person-fill"></i> Get Started</a>
+        <a href="#features" class="btn-secondary"><i class="bi bi-stars"></i> Explore Features</a>
+      </div>
+    </div>
+
+    <div class="hero-image animate-scale">
+      <div class="portal-card">
+        <div class="portal-header">
+          <div class="circle red"></div>
+          <div class="circle yellow"></div>
+          <div class="circle green"></div>
+        </div>
+        <div class="portal-body">
+          <div class="portal-tag"><i class="bi bi-bar-chart-line"></i> IA Marks</div>
+          <div class="portal-tag"><i class="bi bi-journal-text"></i> Notes</div>
+          <div class="portal-tag"><i class="bi bi-people"></i> Students</div>
+          <div class="portal-tag"><i class="bi bi-lock"></i> Admin Access</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🧠 Our Vision Section -->
+  <section class="about-section animate-fade">
+    <div class="about-container">
+      <div class="about-text animate-slide-left">
+        <h2>Our Vision</h2>
+        <p>
+          We believe in simplifying education technology.  
+          Our mission is to empower colleges to digitize operations —  
+          making academic workflows efficient, transparent, and accessible to everyone.
+        </p>
+      </div>
+      <div class="about-graphic animate-scale">
+        <i class="bi bi-mortarboard-fill"></i>
+        <div class="pulse-circle"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 💡 Features Section -->
+  <section id="features" class="features-section">
+    <h2 class="animate-fade">Portal Highlights</h2>
+    <div class="features-grid">
+      <div class="feature-card animate-slide-up delay-1">
+        <i class="bi bi-bar-chart-fill"></i>
+        <h4>IA Marks Tracking</h4>
+        <p>Teachers can input, manage, and monitor internal assessment scores per semester.</p>
+      </div>
+      <div class="feature-card animate-slide-up delay-2">
+        <i class="bi bi-journal-richtext"></i>
+        <h4>Notes Upload System</h4>
+        <p>Upload and organize notes by subject and module for easy student access.</p>
+      </div>
+      <div class="feature-card animate-slide-up delay-3">
+        <i class="bi bi-people-fill"></i>
+        <h4>Student Dashboard</h4>
+        <p>Students can view IA marks, attendance, and download module-wise notes.</p>
+      </div>
+      <div class="feature-card animate-slide-up delay-4">
+        <i class="bi bi-shield-lock-fill"></i>
+        <h4>Secure Admin</h4>
+        <p>Admins manage teachers, circulars, and monitor academic progress seamlessly.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🌐 Why Choose Us Section -->
+  <section class="why-section" id="why">
+    <h2 class="animate-fade">Why Choose <span>College Portal?</span></h2>
+    <div class="why-grid">
+      <div class="why-item fade-up">
+        <i class="bi bi-lightning-charge-fill"></i>
+        <h4>Fast & Reliable</h4>
+        <p>Lightning-speed access with optimized database performance.</p>
+      </div>
+
+      <div class="why-item rotate-in">
+        <i class="bi bi-shield-check"></i>
+        <h4>Secure Platform</h4>
+        <p>Advanced encryption and verified MongoDB Atlas data protection.</p>
+      </div>
+
+      <div class="why-item slide-in">
+        <i class="bi bi-stars"></i>
+        <h4>Modern Design</h4>
+        <p>A sleek, responsive interface crafted for clarity and elegance on all devices.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+
+<!-- ✅ Footer -->
+<footer class="footer">
+  <div class="footer-content">
+    <p>© {{ current_year }} <strong>College Portal</strong> • Designed for smarter academic management.</p>
+    <div class="footer-icons">
+      <i class="bi bi-shield-check"></i>
+      <i class="bi bi-lightning-charge"></i>
+      <i class="bi bi-cloud"></i>
+    </div>
+  </div>
+</footer>
+
+<!-- ✅ Scroll Animation Script -->
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const el = entry.target;
+
+      if (entry.isIntersecting) {
+        el.classList.add('visible');
+      } else {
+        // Remove when out of view → triggers again when revisited
+        el.classList.remove('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  // Observe all animated elements
+  document.querySelectorAll(`
+    .animate-fade,
+    .animate-slide-up,
+    .animate-slide-left,
+    .animate-scale,
+    .fade-up,
+    .rotate-in,
+    .slide-in
+  `).forEach(el => observer.observe(el));
+</script>
+
+<script>
+  // Observe 'Our Vision' section
+  const visionObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target); // ✅ Runs only once
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  // Target both text and icon
+  document.querySelectorAll('.about-text, .about-graphic').forEach(el => {
+    visionObserver.observe(el);
+  });
+</script>
+{% endblock %}

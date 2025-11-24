@@ -1,0 +1,169 @@
+/* === Upload Students Page (Dark Mode) === */
+body {
+    background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
+    font-family: 'Poppins', sans-serif;
+    color: #f4f4f4;
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* === Main Container === */
+.upload-container {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* === Upload Card === */
+.upload-card {
+    background: rgba(47, 47, 47, 0.95); /* dark grey glass box */
+    backdrop-filter: blur(15px);
+    padding: 50px 40px;
+    border-radius: 25px;
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+    animation: fadeIn 0.8s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
+/* === Upload Icon === */
+.upload-icon {
+    font-size: 3rem;
+    background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+/* === Gradient Text === */
+.text-gradient {
+    background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* === Drop Zone === */
+.drop-zone {
+    background: rgba(40, 40, 40, 0.9);
+    border: 2px dashed rgba(255, 111, 60, 0.6);
+    border-radius: 20px;
+    padding: 40px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #f4f4f4;
+}
+
+.drop-zone:hover,
+.drop-zone.dragover {
+    background: rgba(255, 111, 60, 0.08);
+    transform: scale(1.02);
+    border-color: #ff6f3c;
+}
+
+.drop-zone.uploaded {
+    border-color: #28a745;
+}
+
+/* === Hide Native File Input === */
+.drop-zone input[type="file"] {
+    display: none;
+}
+
+/* === Upload Button === */
+.btn-upload {
+    background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+    border: none;
+    border-radius: 30px;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 14px rgba(255, 111, 60, 0.3);
+}
+
+.btn-upload:hover {
+    background: linear-gradient(135deg, #ff6f3c, #ff4b2b);
+    box-shadow: 0 8px 18px rgba(255, 111, 60, 0.45);
+    transform: scale(1.05);
+}
+
+/* === Back Button === */
+.btn-back {
+    background: transparent;
+    border: 2px solid #ff6f3c;
+    color: #ff6f3c;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.btn-back:hover {
+    background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* === Fix: Make all form labels, helper texts, and file input text white === */
+label,
+small,
+.form-label {
+  color: #fff !important;
+}
+
+/* File input text (for browsers that show it) */
+input[type="file"] {
+  color: #fff;
+}
+
+/* Optional: make the “Choose File” button grey with white text */
+input[type="file"]::file-selector-button {
+  background: #3a3a3a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Hover color for the button */
+input[type="file"]::file-selector-button:hover {
+  background: #505050;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.15);
+  transform: scale(1.03);
+}
+
+/* === Animations === */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/semester_marks.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="semester-page container py-5">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-5">
+    <div>
+      <h2 class="fw-bold page-title">
+        <i class="bi bi-book-half me-2"></i> Semester {{ semester }} — {{ branch }}
+      </h2>
+      <p class="text-muted mb-0">Enter and manage IA marks for each student below.</p>
+    </div>
+    <a href="{{ url_for('branch_dashboard', code=branch) }}" class="btn btn-back">
+      <i class="bi bi-arrow-left-circle me-1"></i> Back to Dashboard
+    </a>
+  </div>
+
+  <!-- Marks Entry Form -->
+  <form method="POST" action="{{ url_for('save_all_marks', code=branch, sem=semester) }}">
+    <div class="student-grid">
+      {% for r in rows %}
+      <div class="student-card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <div>
+            <h5 class="fw-semibold mb-0">{{ r.student.name }}</h5>
+            <small class="text-muted">{{ r.student.usn }}</small>
+          </div>
+
+          <div class="actions d-flex gap-2">
+            <!-- Reset Marks -->
+            <button type="button" class="btn btn-reset"
+              onclick="resetStudent('{{ url_for('reset_student_marks', code=branch, sem=semester, usn=r.student.usn) }}')"
+              title="Reset Marks">
+              <i class="bi bi-arrow-clockwise"></i>
+            </button>
+
+            <!-- Delete Student -->
+            <button type="button" class="btn btn-delete"
+              onclick="deleteStudent('{{ url_for('delete_student_branch', code=branch, usn=r.student.usn) }}', '{{ r.student.name }}', '{{ r.student.usn }}')"
+              title="Delete Student">
+              <i class="bi bi-trash3"></i>
+            </button>
+          </div>
+        </div>
+
+        <input type="hidden" name="usn_list" value="{{ r.student.usn }}">
+
+        <div class="subjects">
+          {% for sub in subjects %}
+          <div class="subject-card">
+            <h6 class="fw-semibold text-gradient">{{ sub }}</h6>
+            <div class="inputs-grid">
+              <input type="number" name="{{ r.student.usn }}__{{ sub }}__IA1" value="{{ r.marks[sub].IA1 }}" placeholder="IA1" min="0" max="30">
+              <input type="number" name="{{ r.student.usn }}__{{ sub }}__IA2" value="{{ r.marks[sub].IA2 }}" placeholder="IA2" min="0" max="30">
+              <input type="number" name="{{ r.student.usn }}__{{ sub }}__IA3" value="{{ r.marks[sub].IA3 }}" placeholder="IA3" min="0" max="30">
+              <input type="text" name="{{ r.student.usn }}__{{ sub }}__ATT" value="{{ r.marks[sub].attendance }}" placeholder="Attendance">
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Save Button -->
+    <div class="text-center mt-5">
+      <button class="btn btn-save-all" type="submit">
+        <i class="bi bi-save2 me-2"></i> Save All Marks
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+function resetStudent(url) {
+  if (confirm("Are you sure you want to reset marks for this student?")) {
+    fetch(url, { method: 'POST' }).then(() => location.reload());
+  }
+}
+
+function deleteStudent(url, name, usn) {
+  if (confirm(`⚠️ Delete ${name} (${usn})? This action cannot be undone.`)) {
+    fetch(url, { method: 'POST' }).then(() => location.reload());
+  }
+}
+</script>
+{% endblock %}

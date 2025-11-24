@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* === Base Theme === */
+body {
+  background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
+  font-family: 'Poppins', sans-serif;
+  color: #f5f5f5;
+  margin: 0;
+}
+
+/* === Gradient Title === */
+.text-gradient {
+  background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* === Dashboard Header === */
+.dashboard-header h2 {
+  color: #fff;
+}
+
+.dashboard-header p {
+  color: #fff !important; /* ✅ Make “USN | Branch | Semester” white */
+  font-size: 1rem;
+}
+
+/* === Dashboard Cards === */
+.dash-card {
+  background: #2a2a2a;
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.dash-card:hover {
+  transform: translateY(-6px);
+  background: #343434;
+  box-shadow: 0 10px 25px rgba(255, 111, 60, 0.3);
+}
+
+/* === Icon Wrapper === */
+.icon-wrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 1.2rem;
+  background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 2rem;
+  box-shadow: 0 4px 12px rgba(255, 111, 60, 0.3);
+}
+
+/* === Card Title === */
+.dash-card h4 {
+  font-weight: 700;
+  color: #fff; /* ✅ White titles */
+}
+
+/* === Card Description (white text) === */
+.dash-card p {
+  color: #fff; /* ✅ White instead of grey */
+  font-size: 0.95rem;
+  min-height: 50px;
+  line-height: 1.6;
+}
+
+/* === Buttons (white text retained) === */
+.btn-view-marks,
+.btn-action {
+  background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+  color: #fff !important; /* ✅ Force white text */
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 10px 24px;
+  transition: 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(255, 111, 60, 0.25);
+}
+
+.btn-view-marks:hover,
+.btn-action:hover {
+  background: linear-gradient(135deg, #ff6f3c, #ff4b2b);
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(255, 111, 60, 0.4);
+}
+
+/* === Responsive Fix === */
+.row.g-4 > [class*='col-'] {
+  display: flex;
+}
+.row.g-4 > [class*='col-'] > .dash-card {
+  flex-grow: 1;
+}
+.text-muted { color: #fff !important; }
+
+@media (max-width: 768px) {
+  .dash-card {
+    padding: 1.5rem 1rem;
+  }
+  .icon-wrapper {
+    width: 70px;
+    height: 70px;
+    font-size: 1.8rem;
+  }
+}

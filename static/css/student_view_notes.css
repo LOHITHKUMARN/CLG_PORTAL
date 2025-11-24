@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* === Base Page === */
+body {
+  background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
+  font-family: 'Poppins', sans-serif;
+  color: #f4f4f4;
+  margin: 0;
+}
+
+/* === Gradient Text === */
+.text-gradient {
+  background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* === Header === */
+.notes-header h2 {
+  font-size: 2rem;
+  color: #fff;
+  font-weight: 700;
+}
+
+/* === Back Button === */
+.btn-back {
+  border: 2px solid #ff6f3c;
+  color: #ff6f3c;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 8px 18px;
+  transition: 0.3s ease;
+  background: transparent;
+}
+.btn-back:hover {
+  background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255, 111, 60, 0.3);
+}
+
+/* ===============================
+   SUBJECT CARD
+   =============================== */
+.subject-card {
+  background: #2b2b2b;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  color: #fff;
+}
+.subject-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(255, 111, 60, 0.25);
+}
+
+/* === Subject Header === */
+.subject-header {
+  background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 14px 16px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ===============================
+   MODULE LIST
+   =============================== */
+.module-list {
+  flex: 1;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* === Uploaded Module === */
+.module-item {
+  background: #252525;
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+  min-height: 50px;
+  color: #f4f4f4;
+}
+.module-item:hover {
+  background: #2f2f2f;
+  transform: scale(1.02);
+  box-shadow: 0 0 12px rgba(255, 111, 60, 0.25);
+}
+
+/* === Module Info === */
+.module-info {
+  font-weight: 500;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* === Download Button === */
+.btn-download {
+  background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  transition: 0.3s ease;
+  font-weight: 500;
+}
+.btn-download:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(255, 111, 60, 0.3);
+}
+
+/* === Not Uploaded Module === */
+.not-uploaded {
+  background: #1f1f1f;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  color: #bbb;
+}
+.no-file {
+  font-size: 0.85rem;
+  color: #aaa;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.no-file i {
+  color: #ff6f3c;
+  font-size: 1rem;
+}
+
+/* === Responsive === */
+@media (max-width: 992px) {
+  .subject-card {
+    min-height: 460px;
+  }
+}
+@media (max-width: 768px) {
+  .subject-header { font-size: 1rem; }
+  .module-item { font-size: 0.9rem; }
+  .subject-card { min-height: auto; }
+}
+@media (min-width: 1200px) {
+  .subject-card {
+    min-height: 500px;
+  }
+}

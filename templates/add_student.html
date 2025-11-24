@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/add_student.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="add-student-page container py-5">
+
+  <!-- Header Section -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold page-title">
+        <i class="bi bi-person-plus-fill me-2"></i>Add Student — {{ branch_code }}
+      </h2>
+      <p class="text-muted mb-0">Fill in the student details to add them to your branch.</p>
+    </div>
+    <a href="{{ url_for('branch_dashboard', code=branch_code) }}" class="btn btn-back">
+      <i class="bi bi-arrow-left-circle me-1"></i> Back to Dashboard
+    </a>
+  </div>
+
+  <!-- Form Card -->
+  <div class="card form-card mx-auto shadow-lg p-4">
+    <div class="card-header text-center mb-4">
+      <h4 class="fw-semibold mb-0">Student Information</h4>
+      <div class="divider mx-auto"></div>
+    </div>
+
+    <form method="post" class="px-3">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-semibold">Full Name</label>
+          <input type="text" name="name" class="form-control" placeholder="Enter student name" required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-semibold">USN</label>
+          <input type="text" name="usn" class="form-control" placeholder="e.g. 22SECD101" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-semibold">Year</label>
+          <select name="year" class="form-select" required>
+            <option value="" disabled selected>Select Year</option>
+            <option value="1">1st Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+          </select>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label fw-semibold">Semester</label>
+          <select name="semester" class="form-select" required>
+            <option value="" disabled selected>Select Semester</option>
+            {% for s in range(1, 9) %}
+            <option value="{{ s }}">Semester {{ s }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-submit">
+          <i class="bi bi-check-circle me-2"></i>Save Student
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

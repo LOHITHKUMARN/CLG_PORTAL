@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+  --accent1: #ff4b2b;
+  --accent2: #ff6f3c;
+  --dark1: #121212;
+  --dark2: #1c1c1c;
+  --dark3: #222;
+  --graybox: #2b2b2b;
+  --light-text: #f5f5f5;
+}
+
+body {
+  background: linear-gradient(135deg, var(--dark1), var(--dark2));
+  color: var(--light-text);
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  padding: 40px 0;
+}
+
+/* Header Title */
+.page-title {
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Divider Line */
+.divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  border-radius: 2px;
+  margin: 8px auto 30px auto;
+}
+
+/* Form Card */
+.form-card {
+  background: var(--graybox);
+  border-radius: 20px;
+  max-width: 780px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+  padding: 35px 45px;
+  margin: 0 auto;
+}
+
+.form-card:hover {
+  box-shadow: 0 10px 35px rgba(255, 111, 60, 0.25);
+  transform: translateY(-3px);
+}
+
+/* Section Header (like “Student Information”) */
+.section-title {
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Labels (like Username, USN, etc.) */
+.form-label {
+  color: var(--light-text);
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Inputs */
+.form-control,
+.form-select {
+  border-radius: 12px;
+  background: #2f2f2f;
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  color: var(--light-text);
+  color: #ffffff;
+  padding: 10px 14px;
+  transition: all 0.3s ease;
+}
+
+
+/* ✅ Make placeholder text white as well */
+.form-control::placeholder {
+  color: #ffffff;
+  opacity: 0.8;
+  /* optional: makes it slightly dimmer than input text */
+}
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--accent2);
+  box-shadow: 0 0 0 0.2rem rgba(255, 111, 60, 0.25);
+  background: #353535;
+  color: #fff;
+}
+
+/* Student Info Section Box (optional) */
+.info-box {
+  background: #2a2a2a;
+  border-radius: 15px;
+  padding: 25px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  margin-bottom: 25px;
+}
+
+/* Buttons */
+.btn-submit {
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 10px 40px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 15px rgba(255, 111, 60, 0.3);
+}
+
+.btn-submit:hover {
+  background: linear-gradient(135deg, var(--accent2), var(--accent1));
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 111, 60, 0.4);
+}
+
+.btn-back {
+  background: transparent;
+  color: var(--accent2);
+  border: 2px solid var(--accent2);
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 8px 20px;
+  transition: 0.3s ease;
+}
+
+.btn-back:hover {
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  color: #fff;
+  box-shadow: 0 5px 15px rgba(255, 111, 60, 0.3);
+}
+
+/* Card Header */
+.card-header {
+  background: rgba(126, 122, 121, 0.89);
+  border: 1px solid rgba(255, 111, 60, 0.15);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  border-radius: 15px 15px 0 0;
+  text-align: center;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  padding: 20px;
+}
+
+
+/* Input Placeholder Color */
+::placeholder {
+  color: #aaa;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-card {
+    padding: 25px;
+  }
+  .btn-submit {
+    width: 100%;
+  }
+}

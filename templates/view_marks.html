@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>{{ student.name }} - {{ student.usn }}</h3>
+<table class="table table-bordered">
+  <thead><tr><th>Sem</th><th>Subject</th><th>IA1</th><th>IA2</th><th>IA3</th></tr></thead>
+  <tbody>
+    {% for m in student.marks %}
+      <tr><td>{{ m.semester }}</td><td>{{ m.subject }}</td><td>{{ m.IA1 }}</td><td>{{ m.IA2 }}</td><td>{{ m.IA3 }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

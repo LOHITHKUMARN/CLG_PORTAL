@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>College Portal</title>
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block styles %}{% endblock %}
+
+  <!-- Toastify for flash messages (kept included but not required by custom toast) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+  <style>
+    /* ===== Base Styles ===== */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #121212; /* Dark background */
+      color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* ===== Navbar Styling ===== */
+    .navbar {
+      background-color: #1e1e1e;
+      border-bottom: 2px solid transparent;
+      border-image: linear-gradient(to right, #ff4b2b, #ff6f3c);
+      border-image-slice: 1;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+      padding: 0.9rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: #fff !important;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-brand i {
+      color: #ff6f3c;
+      margin-right: 8px;
+    }
+
+    .navbar .btn-nav {
+      border-radius: 30px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .navbar .btn-login {
+      background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+      border: none;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(255, 111, 60, 0.25);
+    }
+
+    .navbar .btn-login:hover {
+      background: linear-gradient(135deg, #ff6f3c, #ff8c61);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .navbar .btn-logout {
+      border: 1px solid #ff4b2b;
+      color: #ff4b2b;
+      background: transparent;
+    }
+
+    .navbar .btn-logout:hover {
+      background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+      border: none;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* ===== Page Layout ===== */
+    main {
+      width: 100%;
+      min-height: calc(100vh - 80px);
+    }
+
+    /* ===== Toastify Override (kept minimal) ===== */
+    .toastify {
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ===== Scrollbar (dark theme polish) ===== */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #181818;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #ff4b2b, #ff6f3c);
+      border-radius: 6px;
+    }
+
+    /* ===== Toast Styling (solid, lighter black background) ===== */
+
+    /* container for toasts */
+    #toast-container {
+      position: fixed;
+      top: 90px; /* keeps toast below navbar underline */
+      right: 20px;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-end;
+      pointer-events: none;
+    }
+
+    /* single toast: solid lighter black background, clean box */
+    .custom-toast {
+      pointer-events: auto;
+      width: 360px;
+      max-width: calc(100vw - 40px);
+      background: #4b4b4b; /* solid lighter black background (non-transparent) */
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 12px 14px 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+      transform-origin: right top;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: transform 220ms cubic-bezier(.2,.9,.3,1), opacity 220ms ease;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      backdrop-filter: none;
+    }
+
+    .custom-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* hide icon square (user requested simple box) */
+    .custom-toast .toast-icon {
+      display: none;
+    }
+
+    .custom-toast .toast-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .custom-toast .toast-title {
+      font-size: 14px;
+      color: #ffffff;
+      line-height: 1;
+    }
+    .custom-toast .toast-message {
+      font-size: 13px;
+      color: #d8d8d8;
+      font-weight: 500;
+      opacity: 0.95;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 240px;
+    }
+
+    /* close button */
+    .custom-toast .toast-close {
+      margin-left: 8px;
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.8);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 6px;
+    }
+    .custom-toast .toast-close:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.03);
+    }
+
+    /* left accent line for types */
+    .custom-toast.error   { border-left: 6px solid rgba(231, 76, 60, 0.18); }
+    .custom-toast.success { border-left: 6px solid rgba(46, 204, 113, 0.18); }
+    .custom-toast.info    { border-left: 6px solid rgba(52, 152, 219, 0.16); }
+
+    /* progress bar at bottom */
+    .custom-toast .toast-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 6px;
+      width: 100%;
+      border-radius: 0 0 10px 10px;
+      transform-origin: left;
+      transition: width linear;
+    }
+
+    /* red for errors */
+    .custom-toast.error .toast-progress {
+      background: #e74c3c;
+    }
+
+    /* green for success */
+    .custom-toast.success .toast-progress {
+      background: #2ecc71;
+    }
+
+    /* blue for info */
+    .custom-toast.info .toast-progress {
+      background: #42a5f5;
+    }
+
+    @media (max-width: 480px) {
+      .custom-toast .toast-message { display: none; }
+      .custom-toast { width: 92%; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- === Navbar === -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand" href="{{ url_for('index') }}">
+        <i class="bi bi-mortarboard-fill"></i> College Portal
+      </a>
+
+      <div class="d-flex align-items-center">
+        {% if session.get('user') %}
+          <a class="btn btn-sm btn-logout btn-nav ms-2" href="{{ url_for('logout') }}">
+            <i class="bi bi-box-arrow-right me-1"></i> Logout
+          </a>
+        {% else %}
+          <a class="btn btn-sm btn-login btn-nav ms-2" href="{{ url_for('login') }}">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Login
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <!-- === Page Content (No container here for full-width control) === -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Toast container for custom black toasts -->
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- === Toastify (kept included) === -->
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+  <!-- Custom JS to show black toasts for Flask flash messages -->
+  <script>
+    // showCustomToast builds a toast node that matches your requested solid dark UI (no transparency).
+    // Default iconPath kept for local preview but icon is hidden by CSS.
+    function showCustomToast(message, options = {}) {
+      const {
+        title = "",
+        type = "error",       // 'error' | 'success' | 'info'
+        duration = 3500,      // ms, 0 => sticky
+        iconPath = "/mnt/data/Screenshot 2025-11-09 111701.png" // local preview path (move to static in prod)
+      } = options;
+
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = `custom-toast ${type}`;
+
+      // icon div (kept in DOM for compatibility but hidden via CSS)
+      const iconDiv = document.createElement('div');
+      iconDiv.className = 'toast-icon';
+      iconDiv.style.backgroundImage = `url("${iconPath}")`;
+
+      // text block
+      const text = document.createElement('div');
+      text.className = 'toast-text';
+      const titleEl = document.createElement('div');
+      titleEl.className = 'toast-title';
+      titleEl.textContent = title || (type === 'error' ? 'Error' : type === 'success' ? 'Success' : 'Info');
+      const msgEl = document.createElement('div');
+      msgEl.className = 'toast-message';
+      msgEl.textContent = message || '';
+
+      text.appendChild(titleEl);
+      text.appendChild(msgEl);
+
+      // close button
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'toast-close';
+      closeBtn.innerHTML = '&times;';
+      closeBtn.onclick = (e) => {
+        e.stopPropagation();
+        dismissToast(toast);
+      };
+
+      // progress bar
+      const progress = document.createElement('div');
+      progress.className = 'toast-progress';
+
+      // assemble (icon first kept for markup order)
+      toast.appendChild(iconDiv);
+      toast.appendChild(text);
+      toast.appendChild(closeBtn);
+      toast.appendChild(progress);
+
+      container.appendChild(toast);
+
+      // small delay to allow transition
+      requestAnimationFrame(() => {
+        toast.classList.add('show');
+      });
+
+      // handle duration & progress
+      if (duration > 0) {
+        progress.style.width = '100%';
+        setTimeout(() => {
+          progress.style.transition = `width ${duration}ms linear`;
+          progress.style.width = '0%';
+        }, 30);
+
+        toast._timeout = setTimeout(() => {
+          dismissToast(toast);
+        }, duration + 120);
+      } else {
+        progress.style.display = 'none';
+      }
+
+      // clicking toast (outside close) dismisses it
+      toast.addEventListener('click', function(e) {
+        if (e.target === closeBtn) return;
+        dismissToast(toast);
+      });
+
+      return toast;
+    }
+
+    function dismissToast(toast) {
+      if (!toast) return;
+      clearTimeout(toast._timeout);
+      toast.classList.remove('show');
+      setTimeout(() => {
+        if (toast && toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 220);
+    }
+
+    // Integrate with Flask's flashed messages (server-side)
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          (function(){
+            var cat = "{{ category }}";
+            var msg = {{ message|tojson }};
+            var toastType = 'info';
+            var duration = 3500;
+            if (cat === 'success') { toastType = 'success'; duration = 3000; }
+            else if (cat === 'danger' || cat === 'error' ) { toastType = 'error'; duration = 4200; }
+            else if (cat === 'warning') { toastType = 'info'; duration = 4500; }
+            else { toastType = 'info'; }
+
+            showCustomToast(msg, { title: "", type: toastType, duration: duration, iconPath: "/mnt/data/Screenshot 2025-11-09 111701.png" });
+          })();
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </script>
+
+  <!-- === Page Fade Animation === -->
+  <script>
+    document.body.style.opacity = 0;
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.style.transition = "opacity 0.6s ease-in-out";
+      document.body.style.opacity = 1;
+    });
+  </script>
+</body>
+</html>

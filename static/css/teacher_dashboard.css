@@ -1,0 +1,155 @@
+/* ========== Teacher Dashboard (Dark Theme) ========== */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
+  color: #f4f4f4;
+  margin: 0;
+}
+
+/* ========== Header Section ========== */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-header h2 {
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dashboard-header .badge {
+  font-size: 1rem;
+  padding: 0.6rem 1rem;
+  background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 111, 60, 0.3);
+}
+
+/* ========== Info Alert Box ========== */
+.dashboard-info {
+  background: #2a2a2a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  color: #ddd;
+}
+
+.dashboard-info strong {
+  color: #fff;
+}
+
+/* ========== Branch Cards ========== */
+.branch-card {
+  background: #2b2b2b;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  color: #f4f4f4;
+  text-align: center;
+  padding: 1.2rem;
+}
+
+.branch-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255, 111, 60, 0.3);
+  background: #343434;
+}
+
+.branch-card h5 {
+  font-weight: 600;
+  color: #fff;
+}
+
+.branch-card p {
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+.branch-card i {
+  font-size: 2.2rem;
+  background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+/* ========== Buttons ========== */
+.btn-danger {
+  background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+.btn-danger:hover {
+  background: linear-gradient(135deg, #ff6f3c, #ff4b2b);
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(255, 111, 60, 0.4);
+}
+
+.btn-outline-primary {
+  color: #ff9966;
+  border: 2px solid #ff9966;
+  background: transparent;
+  border-radius: 30px;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+.btn-outline-primary:hover {
+  background: linear-gradient(135deg, #ff4b2b, #ff6f3c);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(255, 111, 60, 0.4);
+}
+
+.btn-outline-success {
+  color: #a8ffb0;
+  border: 2px solid #28a745;
+  background: transparent;
+  border-radius: 30px;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+.btn-outline-success:hover {
+  background: linear-gradient(135deg, #28a745, #34d058);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(40, 167, 69, 0.4);
+}
+
+/* === Enter Branch Button === */
+.btn-enter-branch {
+  background: linear-gradient(135deg, #ff7043, #ff9966);
+  border: none;
+  color: #fff;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  padding: 10px 22px;
+}
+.btn-enter-branch:hover {
+  background: linear-gradient(135deg, #ff8c61, #ff7043);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(255, 112, 67, 0.3);
+}
+
+/* ========== Responsive Fixes ========== */
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  .branch-card {
+    margin-bottom: 1rem;
+  }
+}
